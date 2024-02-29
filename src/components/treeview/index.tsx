@@ -1,27 +1,21 @@
-import React, { HTMLAttributes, useEffect, useState } from "react";
-import { TreeView, TreeItem } from "@mui/x-tree-view";
+import React, { useEffect, useState } from "react";
 import toast from "@/util/toast";
 import { getRandomNumber, getRedableDateFromISOString } from "@/util/helper";
-import { Button, MenuItem, Paper } from "@mui/material";
+import {  MenuItem, Paper } from "@mui/material";
 import MyModal from "../my modal";
 import { MyButton } from "../MyButton";
-import SpeedDial from "../speed dial";
-import Menu from "../menu";
 import { tree } from "@/types";
 import Menu2 from "../menu2";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useDispatch, useSelector } from "react-redux";
 import { setEditNode } from "@/lib/slices/data";
 import { RootState } from "@/lib/store";
+import { baseurl } from "@/util/url";
 
 // const initialTreeData: tree[] = [
 //   {
@@ -53,6 +47,7 @@ function TreeViewComponent() {
           position: "relative",
           width: "100%",
           height: "100vh",
+          overflow: 'auto'
         }}
       >
         <TreeViewCustom
@@ -88,11 +83,12 @@ function TreeViewComponent() {
             }}
           />
         </TreeViewCustom>
-        <MyModal
+       
+      </div>
+      <MyModal
           isOpen={editModalOpen}
           onClose={() => setEditModalOpen(false)}
         />
-      </div>
     </>
   );
 }
@@ -367,7 +363,7 @@ function TreeViewCustom({
 
 async function addChildNodeApi(node: tree) {
   try {
-    const res = await fetch("http://localhost:5000/trees", {
+    const res = await fetch(`${baseurl}/trees`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -391,7 +387,7 @@ async function getTreeChildrenApi(
   setter: React.Dispatch<React.SetStateAction<tree[]>>
 ) {
   try {
-    const res = await fetch(`http://localhost:5000/trees?parentId=${nodeid}`);
+    const res = await fetch(`${baseurl}/trees?parentId=${nodeid}`);
     const data = (await res.json()) as tree[];
     if (!data.length) {
       toast("No sections found!");
@@ -410,7 +406,7 @@ async function getTreeChildrenApi(
 
 async function deleteNodeApi(nodeid: string) {
   try {
-    const res = await fetch(`http://localhost:5000/trees/${nodeid}`, {
+    const res = await fetch(`${baseurl}/trees/${nodeid}`, {
       method: "delete",
     });
     const data = (await res.json()) as tree[];

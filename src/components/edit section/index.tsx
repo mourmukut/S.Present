@@ -1,14 +1,9 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -17,11 +12,11 @@ import { tree } from "@/types";
 import toast from "@/util/toast";
 import { useDispatch } from "react-redux";
 import { setEditNode } from "@/lib/slices/data";
+import { baseurl } from "@/util/url";
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function ({ node }: { node: tree }) {
+export default function ({ node,handleClose }: { node: tree,handleClose:()=>void }) {
   const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +33,7 @@ export default function ({ node }: { node: tree }) {
 
     const updatedNode = await updateTreeApi(updatedNodeParams);
     if (!updatedNode) return;
+    handleClose()
     dispatch(setEditNode(updatedNode));
   };
 
@@ -46,7 +42,7 @@ export default function ({ node }: { node: tree }) {
       <Container
         component="main"
         style={{
-          width: "70%",
+          width: "100%",
         }}
       >
         <CssBaseline />
@@ -113,7 +109,7 @@ export default function ({ node }: { node: tree }) {
 
 async function updateTreeApi(node: tree) {
   try {
-    const res = await fetch(`http://localhost:5000/trees/${node.id}`, {
+    const res = await fetch(`${baseurl}/trees/${node.id}`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",

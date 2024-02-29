@@ -24,7 +24,7 @@ export default function RootLayout({
           <Toaster />
 
           <NavigationBar />
-          <div className="h-20"></div>
+          <div className="h-16"></div>
           {children}
         </StoreProvider>
       </body>

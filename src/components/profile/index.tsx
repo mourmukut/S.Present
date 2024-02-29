@@ -20,6 +20,7 @@ import { getRandomNumber } from "@/util/helper";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { DataState } from "@/lib/slices/data";
+import { baseurl } from "@/util/url";
 
 const defaultTheme = createTheme();
 
@@ -64,7 +65,7 @@ export default function () {
 
 async function getUserByEmail(email: string) {
   try {
-    const resFind = await fetch(`http://localhost:5000/users?email=${email}`);
+    const resFind = await fetch(`${baseurl}/users?email=${email}`);
     const dataFind = await resFind.json();
     console.log("data", dataFind);
     return dataFind.length
@@ -83,7 +84,7 @@ async function addUserApi(user: User) {
 
       return null;
     }
-    const resCreate = await fetch("http://localhost:5000/users", {
+    const resCreate = await fetch(`${baseurl}/users`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

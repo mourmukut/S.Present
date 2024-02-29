@@ -15,14 +15,17 @@ interface FadeProps {
 
 const style = {
   position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '70%',
+  // top: '50%',
+  // left: '50%',
+  // transform: 'translate(-50%, -50%)',
+  width: '90%',
   backgroundColor: 'white',
   border: '2px solid #000',
   borderRadius: 20,
+  marginTop: 20,
+  placeSelf: 'center',
   padding : 20,
+  zIndex:999,
 };
 
 export default function ({
@@ -66,7 +69,7 @@ export default function ({
 
       </div>
       <div style={style}>
-            <EditSection node={dataState.editNode} />
+            <EditSection handleClose={handleClose} node={dataState.editNode} />
             <MyButton onClick={handleClose} title='close'/>
             {/* <MyButton onClick={handleClose} title='save'/> */}
       </div>

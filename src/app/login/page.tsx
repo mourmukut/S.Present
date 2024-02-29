@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/lib/slices/data';
 import { useRouter } from 'next/navigation';
 import CheckForLogin from '@/components/check for login';
+import { baseurl } from '@/util/url';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -109,7 +110,7 @@ export default function () {
 
 async function getUserByEmailAndPassword(email: string,password: string) {
   try {
-    const resFind = await fetch(`http://localhost:5000/users?email=${email}&password=${password}`);
+    const resFind = await fetch(`${baseurl}/users?email=${email}&password=${password}`);
     const dataFind = await resFind.json();
     console.log("data", dataFind);
     if(!dataFind.length){
