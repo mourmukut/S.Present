@@ -53,9 +53,10 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-export default function ({menuItemsCustom,closeMenu=0}:{
+export default function ({menuItemsCustom,closeMenu=0,hide=true}:{
   menuItemsCustom : React.ReactNode,
-  closeMenu?: number
+  closeMenu?: number,
+  hide: boolean
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -69,6 +70,10 @@ export default function ({menuItemsCustom,closeMenu=0}:{
   React.useEffect(()=>{
     handleClose()
   },[closeMenu])
+  
+  if(hide){
+    return null
+  }
 
   return (
     <div>

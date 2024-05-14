@@ -183,6 +183,7 @@ function MyTreeItem({
           menuComponent={
             <Menu2
               closeMenu={closeMenu}
+              hide={false}
               menuItemsCustom={
                 <>
                   <MenuItem onClick={onclickShowSections}>
